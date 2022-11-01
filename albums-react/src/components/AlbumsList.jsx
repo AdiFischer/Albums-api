@@ -9,7 +9,7 @@ export default function AlbumList() {
         .catch(alert)
     }, [])
     return(
-        <main>
+        <main className="album-list">
             <h2>Albums go here...</h2>
             {!albums
             ? <p>Loading...</p>
