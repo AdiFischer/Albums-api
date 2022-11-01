@@ -1,0 +1,25 @@
+import dbConnect from "./dbConnect.js";
+export function getAllAlbums(req, res) {
+    const db = dbConnect
+    db.collection('albums').get()
+    // .then(collection => {
+    //     const albumArr = collection.docs.map(doc => {
+    //         let album = doc.data()
+    //         return album
+    //     })
+    // })
+    .then(collection => {
+        const albumArr = collection.docs.map(doc => {
+        
+            return {...doc.data(), albumId: doc.id}
+        })
+        res.send(albumArr)
+    })
+    .catch(err => res.status(500).send({ success: false, message: err}))
+}    
+export function createNewAlbums(req,res) {
+    const db = dbConnect
+    db.collection('albums').add(req.body)
+    .then(doc => res.status(201).send({ success: true, message: 'Album created:' + doc.id }))
+    .catch(err => res.status(500)).send({ success: false, message: err})
+}
